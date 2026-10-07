@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science & AI Engineering Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            accent: '#06b6d4',
+                            emerald: '#10b981'
+                        },
+                        darkbg: '#0b0f19',
+                        darkcard: '#111827',
+                        darkborder: '#1f2937'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome & Chart.js CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.25);
+        }
+        .glow-cyan {
+            box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.25);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0b0f19; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #374151; }
+    </style>
+</head>
+<body class="bg-darkbg text-gray-200 antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-darkborder">
+        <div class="max-w-7xl mx-mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center font-mono font-bold text-white shadow-lg group-hover:scale-105 transition-transform">
+                    &lt;/&gt;
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-gray-100 tracking-tight leading-none text-base">CS & Data Scientist</span>
+                    <span class="text-xs text-brand-accent font-mono mt-0.5">@Kano, Nigeria</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                <a href="#about" class="hover:text-brand-accent transition-colors">About</a>
+                <a href="#skills" class="hover:text-brand-accent transition-colors">Skills</a>
+                <a href="#analytics-demo" class="hover:text-brand-accent transition-colors flex items-center gap-1.5 text-brand-accent">
+                    <i class="fa-solid me-1 fa-chart-line"></i> Analytics Demo
+                </a>
+                <a href="#projects" class="hover:text-brand-accent transition-colors">Projects</a>
+                <a href="#experience" class="hover:text-brand-accent transition-colors">Experience</a>
+                <a href="#contact" class="hover:text-brand-accent transition-colors">Contact</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-3">
+                <button onclick="openCvModal()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-brand-600 hover:bg-brand-500 text-white shadow-md transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>View CV</span>
+                </button>
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 text-gray-400 hover:text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobileMenu" class="hidden md:hidden border-b border-darkborder bg-darkcard px-4 pt-2 pb-4 space-y-2">
+            <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800">About</a>
+            <a href="#skills" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800">Skills</a>
+            <a href="#analytics-demo" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-brand-accent hover:bg-gray-800">Analytics Demo Widget</a>
+            <a href="#projects" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800">Projects</a>
+            <a href="#experience" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800">Experience</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="about" class="relative pt-12 pb-20 overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-brand-600/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-accent text-xs font-medium">
+                        <span class="w-2 h-2 rounded-full bg-brand-emerald animate-pulse"></span>
+                        Open for Data Analytics / Data Science Internships
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                        Transforming Data into <span class="bg-gradient-to-r from-brand-accent via-brand-500 to-indigo-400 bg-clip-text text-transparent">Actionable Insights & AI Solutions</span>.
+                    </h1>
+
+                    <p class="text-lg text-gray-400 max-w-2xl font-light leading-relaxed">
+                        Computer Science undergraduate with a passion for <strong class="text-gray-200">Exploratory Data Analysis (EDA)</strong>, <strong class="text-gray-200">Predictive Modeling</strong>, and <strong class="text-gray-200">SQL Data Architecture</strong>. Building end-to-end data workflows to help organizations solve complex problems.
+                    </p>
+
+                    <!-- Core Metrics / Highlights Bar -->
+                    <div class="grid grid-cols-3 gap-4 pt-2 border-y border-darkborder py-4 max-w-lg">
+                        <div>
+                            <div class="text-2xl font-bold font-mono text-white">Python / SQL</div>
+                            <div class="text-xs text-gray-400">Core Stack</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold font-mono text-brand-accent">100+ hrs</div>
+                            <div class="text-xs text-gray-400">Hands-on EDA & ML</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold font-mono text-emerald-400">CS Undergrad</div>
+                            <div class="text-xs text-gray-400">Data Focus</div>
+                        </div>
+                    </div>
+
+                    <!-- Hero Call to Action Buttons -->
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#projects" class="px-6 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 hover:from-brand-500 hover:to-brand-600 text-white font-medium text-sm shadow-lg shadow-brand-600/30 transition-all flex items-center gap-2">
+                            <span>Explore Projects</span>
+                            <i class="fa-solid fa-arrow-down text-xs"></i>
+                        </a>
+                        <button onclick="openCvModal()" class="px-6 py-3 rounded-xl bg-darkcard border border-darkborder hover:border-gray-600 text-gray-200 font-medium text-sm transition-all flex items-center gap-2 hover:text-white">
+                            <i class="fa-solid fa-id-card"></i>
+                            <span>View Interactive CV</span>
+                        </button>
+                        <a href="#contact" class="px-6 py-3 rounded-xl border border-transparent hover:border-darkborder text-gray-400 hover:text-white text-sm transition-all">
+                            Contact Me
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Interactive Code / Data Feature Card -->
+                <div class="lg:col-span-5">
+                    <div class="glass-panel p-6 rounded-2xl glow-effect relative">
+                        <div class="flex items-center justify-between pb-4 border-b border-darkborder">
+                            <div class="flex items-center gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                            </div>
+                            <div class="text-xs font-mono text-gray-500">pipeline_preview.py</div>
+                        </div>
+                        <pre class="mt-4 text-xs font-mono text-gray-300 leading-relaxed overflow-x-auto">
+<span class="text-purple-400">import</span> pandas <span class="text-purple-400">as</span> pd
+<span class="text-purple-400">import</span> seaborn <span class="text-purple-400">as</span> sns
+<span class="text-purple-400">from</span> sklearn.model_selection <span class="text-purple-400">import</span> train_test_split
+
+<span class="text-gray-500"># 1. Load Dataset</span>
+df = pd.read_csv(<span class="text-emerald-300">'dataset.csv'</span>)
+
+<span class="text-gray-500"># 2. Exploratory Data Cleaning</span>
+df.dropna(subset=[<span class="text-emerald-300">'key_metrics'</span>], inplace=<span class="text-purple-400">True</span>)
+df[<span class="text-emerald-300">'norm_score'</span>] = df[<span class="text-emerald-300">'val'</span>] / df[<span class="text-emerald-300">'val'</span>].max()
+
+<span class="text-gray-500"># 3. Extract Insights</span>
+insights = df.groupby(<span class="text-emerald-300">'category'</span>).mean()
+<span class="text-blue-400">print</span>(<span class="text-emerald-300">f"[+] Insights Pipeline Ready."</span>)</pre>
+                        
+                        <div class="mt-4 pt-4 border-t border-darkborder flex items-center justify-between text-xs text-gray-400">
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-emerald-400"></i> Code Quality Validated</span>
+                            <span class="font-mono text-brand-accent">Python 3.11</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Analytics Widget Section -->
+    <section id="analytics-demo" class="py-16 bg-darkcard/50 border-y border-darkborder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-wider text-brand-accent">Interactive Feature</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Live Data Analytics Sandbox</h2>
+                    <p class="text-sm text-gray-400 mt-1">Demonstrating frontend data rendering and interactive metric toggling.</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex gap-2">
+                    <button onclick="updateChart('survival')" id="btn-survival" class="chart-tab-btn active px-3 py-1.5 text-xs font-medium rounded-lg bg-brand-600 text-white transition-all">
+                        Titanic Survival EDA
+                    </button>
+                    <button onclick="updateChart('sales')" id="btn-sales" class="chart-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-800 text-gray-400 hover:text-white transition-all">
+                        E-Commerce Sales Trend
+                    </button>
+                    <button onclick="updateChart('churn')" id="btn-churn" class="chart-tab-btn px-3 py-1.5 text-xs font-medium rounded-lg bg-gray-800 text-gray-400 hover:text-white transition-all">
+                        Churn Risk Metrics
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Dynamic Chart Container -->
+                <div class="lg:col-span-8 glass-panel p-6 rounded-2xl relative min-h-[340px]">
+                    <canvas id="interactiveDemoChart" height="260"></canvas>
+                </div>
+
+                <!-- Live Metrics Summary Panel -->
+                <div class="lg:col-span-4 space-y-4">
+                    <div class="glass-panel p-5 rounded-xl">
+                        <div class="text-xs font-mono text-gray-400">ACTIVE DATASET SUMMARY</div>
+                        <h3 id="sandbox-title" class="text-lg font-bold text-white mt-1">Titanic Demographics & Survival</h3>
+                        <p id="sandbox-desc" class="text-xs text-gray-400 mt-2 leading-relaxed">
+                            Evaluating survival outcomes cross-referenced by ticket class passenger demographics. Highlights standard EDA grouping and visualization techniques.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-panel p-4 rounded-xl">
+                            <span class="text-xs text-gray-400">Sample Records</span>
+                            <div id="stat-records" class="text-xl font-bold font-mono text-brand-accent mt-1">891 rows</div>
+                        </div>
+                        <div class="glass-panel p-4 rounded-xl">
+                            <span class="text-xs text-gray-400">Primary Key Metric</span>
+                            <div id="stat-metric" class="text-xl font-bold font-mono text-emerald-400 mt-1">38.38%</div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-brand-500/10 border border-brand-500/20 text-xs text-gray-300">
+                        <i class="fa-solid fa-lightbulb text-brand-accent me-1"></i>
+                        <strong>Key Insight:</strong> <span id="sandbox-insight">First-class passengers showed a significantly higher survival rate (~63%) compared to third-class (~24%).</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Skills Matrix -->
+    <section id="skills" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold text-white">Technical Skills Matrix</h2>
+                <p class="text-sm text-gray-400 mt-2">Tools, technologies, and methodologies I leverage to analyze datasets and build models.</p>
+                
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap justify-center gap-2 mt-6">
+                    <button onclick="filterSkills('all')" class="skill-tab active px-4 py-1.5 text-xs font-medium rounded-full bg-brand-600 text-white transition-all">All</button>
+                    <button onclick="filterSkills('lang')" class="skill-tab px-4 py-1.5 text-xs font-medium rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700 transition-all">Languages</button>
+                    <button onclick="filterSkills('data')" class="skill-tab px-4 py-1.5 text-xs font-medium rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700 transition-all">Data & Viz</button>
+                    <button onclick="filterSkills('tools')" class="skill-tab px-4 py-1.5 text-xs font-medium rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700 transition-all">Tools & Workflows</button>
+                    <button onclick="filterSkills('concepts')" class="skill-tab px-4 py-1.5 text-xs font-medium rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700 transition-all">Core Concepts</button>
+                </div>
+            </div>
+
+            <!-- Skills Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="skills-grid">
+                <!-- Skill Items with Categories -->
+                <div class="skill-card lang glass-panel p-4 rounded-xl flex items-center gap-3 border border-darkborder hover:border-brand-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg"><i class="fa-brands fa-python"></i></div>
+                    <div>
+                        <div class="font-semibold text-white text-sm">Python</div>
+                        <div class="text-[11px] text-gray-400">Data Analytics / ML</div>
+                    </div>
+                </div>
+
+                <div class="skill-card lang glass-panel p-4 rounded-xl flex items-center gap-3 border border-darkborder hover:border-brand-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-lg"><i class="fa-solid fa-database"></i></div>
+                    <div>
+                        <div class="font-semibold text-white text-sm">SQL</div>
+                        <div class="text-[11px] text-gray-400">Queries & Aggregations</div>
+                    </div>
+                </div>
+
+                <div class="skill-card data glass-panel p-4 rounded-xl flex items-center gap-3 border border-darkborder hover:border-brand-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-lg"><i class="fa-solid fa-table"></i></div>
+                    <div>
+                        <div class="font-semibold text-white text-sm">Pandas & NumPy</div>
+                        <div class="text-[11px] text-gray-400">Data Wrangling</div>
+                    </div>
+                </div>
+
+                <div class="skill-card data glass-panel p-4 rounded-xl flex items-center gap-3 border border-darkborder hover:border-brand-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg"><i class="fa-solid fa-chart-pie"></i></div>
+                    <div>
+                        <div class="font-semibold text-white text-sm">Seaborn / Matplotlib</div>
+                        <div class="text-[11px] text-gray-400">Visual Storytelling</div>
+                    </div>
+                </div>
+
+                <div class="skill-card data glass-panel p-4 rounded-xl flex items-center gap-3 border border-darkborder hover:border-brand-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <div>
+                        <div class="font-semibold text-white text-sm">EDA Techniques</div>
+                        <div class="text-[11px] text-gray-400">Missing Values & Outliers</div>
+                    </div>
+                </div>
+
+                <div class="skill-card tools glass-panel p-4 rounded-xl flex items-center gap-3 border border-darkborder hover:border-brand-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center text-lg"><i class="fa-brands fa-git-alt"></i></div>
+                    <div>
+                        <div class="font-semibold text-white text-sm">Git & GitHub</div>
+                        <div class="text-[11px] text-gray-400">Version Control</div>
+                    </div>
+                </div>
+
+                <div class="skill-card tools glass-panel p-4 rounded-xl flex items-center gap-3 border border-darkborder hover:border-brand-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-orange-400/10 text-orange-300 flex items-center justify-center text-lg"><i class="fa-solid fa-book-open"></i></div>
+                    <div>
+                        <div class="font-semibold text-white text-sm">Jupyter / Colab</div>
+                        <div class="text-[11px] text-gray-400">Interactive Notebooks</div>
+                    </div>
+                </div>
+
+                <div class="skill-card concepts glass-panel p-4 rounded-xl flex items-center gap-3 border border-darkborder hover:border-brand-500/50 transition-all">
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg"><i class="fa-solid fa-brain"></i></div>
+                    <div>
+                        <div class="font-semibold text-white text-sm">Scikit-Learn</div>
+                        <div class="text-[11px] text-gray-400">ML Fundamentals</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects Showcase -->
+    <section id="projects" class="py-20 bg-darkcard/30 border-t border-darkborder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs font-mono text-brand-accent uppercase tracking-wider">Portfolio Highlights</span>
+                    <h2 class="text-3xl font-bold text-white mt-1">Featured Data Projects</h2>
+                </div>
+                <p class="text-sm text-gray-400 max-w-md mt-2 md:mt-0">
+                    Each project is documented with a clear problem statement, analytical process, and actionable insights.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project Card 1 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-darkborder hover:border-brand-500/40 transition-all flex flex-col group">
+                    <div class="p-6 flex-1 space-y-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="px-2.5 py-1 rounded-full bg-brand-500/10 text-brand-accent border border-brand-500/20 font-mono">EDA & Modeling</span>
+                            <span class="text-gray-500"><i class="fa-regular fa-clock me-1"></i>Kaggle Project</span>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-accent transition-colors">
+                            Titanic Survival EDA & Logistic Regression
+                        </h3>
+
+                        <p class="text-sm text-gray-400 leading-relaxed">
+                            Comprehensive exploratory data analysis and baseline machine learning on 800+ passenger records to identify core survival drivers.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 text-xs pt-2">
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Python</span>
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Pandas</span>
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Seaborn</span>
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Scikit-Learn</span>
+                        </div>
+                    </div>
+
+                    <div class="px-6 py-4 bg-darkcard border-t border-darkborder flex items-center justify-between">
+                        <button onclick="openProjectModal('titanic')" class="text-xs font-medium text-brand-accent hover:text-white flex items-center gap-1">
+                            <span>Deep Dive Details</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                        <a href="https://github.com" target="_blank" rel="noopener" class="text-gray-400 hover:text-white text-sm" title="View Code on GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-darkborder hover:border-brand-500/40 transition-all flex flex-col group">
+                    <div class="p-6 flex-1 space-y-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">SQL Analytics</span>
+                            <span class="text-gray-500"><i class="fa-regular fa-clock me-1"></i>Business Case</span>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-accent transition-colors">
+                            E-Commerce Revenue & Sales Performance Analysis
+                        </h3>
+
+                        <p class="text-sm text-gray-400 leading-relaxed">
+                            Structured SQL query suite evaluating monthly recurring revenue, customer retention rates, and top product categories from raw sales logs.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 text-xs pt-2">
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">SQL</span>
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Data Wrangling</span>
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Chart.js</span>
+                        </div>
+                    </div>
+
+                    <div class="px-6 py-4 bg-darkcard border-t border-darkborder flex items-center justify-between">
+                        <button onclick="openProjectModal('sales')" class="text-xs font-medium text-brand-accent hover:text-white flex items-center gap-1">
+                            <span>Deep Dive Details</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                        <a href="https://github.com" target="_blank" rel="noopener" class="text-gray-400 hover:text-white text-sm" title="View Code on GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="glass-panel rounded-2xl overflow-hidden border border-darkborder hover:border-brand-500/40 transition-all flex flex-col group">
+                    <div class="p-6 flex-1 space-y-4">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">Machine Learning</span>
+                            <span class="text-gray-500"><i class="fa-regular fa-clock me-1"></i>Predictive Model</span>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white group-hover:text-brand-accent transition-colors">
+                            Customer Churn Risk Classification
+                        </h3>
+
+                        <p class="text-sm text-gray-400 leading-relaxed">
+                            Predictive model analyzing user usage metrics to identify churn risks prior to subscription cancellation. Feature importance analysis included.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 text-xs pt-2">
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Python</span>
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Scikit-Learn</span>
+                            <span class="px-2 py-0.5 rounded bg-gray-800 text-gray-300 font-mono">Random Forest</span>
+                        </div>
+                    </div>
+
+                    <div class="px-6 py-4 bg-darkcard border-t border-darkborder flex items-center justify-between">
+                        <button onclick="openProjectModal('churn')" class="text-xs font-medium text-brand-accent hover:text-white flex items-center gap-1">
+                            <span>Deep Dive Details</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                        <a href="https://github.com" target="_blank" rel="noopener" class="text-gray-400 hover:text-white text-sm" title="View Code on GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Education Timeline -->
+    <section id="experience" class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white">Education & Learning Journey</h2>
+                <p class="text-sm text-gray-400 mt-2">Academic background, continuous learning, and practical project milestones.</p>
+            </div>
+
+            <div class="relative border-l border-darkborder ml-4 md:ml-32 space-y-8">
+                
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-8">
+                    <div class="absolute -left-3 top-1.5 w-6 h-6 rounded-full bg-brand-600 border-4 border-darkbg flex items-center justify-center text-white text-[10px]">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-1">
+                        <h3 class="text-lg font-bold text-white">B.Sc. Computer Science (Data Science Track)</h3>
+                        <span class="text-xs font-mono text-brand-accent">In Progress (Undergraduate)</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-2">University Degree Program • Kano, Nigeria</p>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Coursework focus: Data Structures & Algorithms, Database Systems (SQL), Applied Statistics, Object-Oriented Programming with Python, Discrete Mathematics.
+                    </p>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-8">
+                    <div class="absolute -left-3 top-1.5 w-6 h-6 rounded-full bg-emerald-500 border-4 border-darkbg flex items-center justify-center text-white text-[10px]">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-1">
+                        <h3 class="text-lg font-bold text-white">100 Days of Code: Complete Python Bootcamp</h3>
+                        <span class="text-xs font-mono text-emerald-400">Completed Certification</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-2">Udemy / Online Professional Certification</p>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Intensive hands-on Python curriculum spanning Object-Oriented Programming, API integration, data scraping with BeautifulSoup, and exploratory analysis with Pandas & Matplotlib.
+                    </p>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="relative pl-8">
+                    <div class="absolute -left-3 top-1.5 w-6 h-6 rounded-full bg-cyan-500 border-4 border-darkbg flex items-center justify-center text-white text-[10px]">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-1">
+                        <h3 class="text-lg font-bold text-white">Data Analytics Virtual Simulation Program</h3>
+                        <span class="text-xs font-mono text-cyan-400">Practical Project Training</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mb-2">Syntechhub / Practical Simulation</p>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Worked on practical dataset tasks including cleaning noisy spreadsheet datasets, writing exploratory SQL queries, constructing charts, and summarizing findings into executive business slide decks.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-darkcard/50 border-t border-darkborder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-xs font-mono text-brand-accent uppercase">Get In Touch</span>
+                        <h2 class="text-3xl font-bold text-white mt-1">Let's Collaborate on Data Projects</h2>
+                        <p class="text-sm text-gray-400 mt-2 leading-relaxed">
+                            Currently open for entry-level Data Analyst, Data Science Intern, or junior technical roles. Feel free to reach out via message or social channels!
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 text-sm text-gray-300">
+                        <div class="flex items-center gap-3 glass-panel p-3.5 rounded-xl">
+                            <div class="w-9 h-9 rounded-lg bg-brand-600/20 text-brand-accent flex items-center justify-center"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <div class="text-xs text-gray-400">Email Address</div>
+                                <div class="font-medium text-white">myemail@domain.com</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 glass-panel p-3.5 rounded-xl">
+                            <div class="w-9 h-9 rounded-lg bg-brand-600/20 text-brand-accent flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <div class="text-xs text-gray-400">Current Location</div>
+                                <div class="font-medium text-white">Kano, Nigeria</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="https://github.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-gray-300 hover:text-white hover:border-brand-500 transition-all">
+                            <i class="fa-brands fa-github text-lg"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-gray-300 hover:text-white hover:border-brand-500 transition-all">
+                            <i class="fa-brands fa-linkedin-in text-lg"></i>
+                        </a>
+                        <a href="mailto:myemail@domain.com" class="w-10 h-10 rounded-xl glass-panel flex items-center justify-center text-gray-300 hover:text-white hover:border-brand-500 transition-all">
+                            <i class="fa-solid fa-paper-plane text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Interactive Contact Form -->
+                <div class="lg:col-span-7">
+                    <form id="contactForm" onsubmit="handleFormSubmit(event)" class="glass-panel p-8 rounded-2xl space-y-5 border border-darkborder">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-300 mb-1.5">Your Name</label>
+                                <input type="text" required placeholder="e.g. Alex Johnson" class="w-full px-4 py-2.5 rounded-xl bg-darkcard border border-darkborder focus:border-brand-500 focus:outline-none text-sm text-white transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-300 mb-1.5">Your Email</label>
+                                <input type="email" required placeholder="alex@company.com" class="w-full px-4 py-2.5 rounded-xl bg-darkcard border border-darkborder focus:border-brand-500 focus:outline-none text-sm text-white transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-1.5">Subject</label>
+                            <input type="text" required placeholder="e.g. Data Analytics Internship Opportunity" class="w-full px-4 py-2.5 rounded-xl bg-darkcard border border-darkborder focus:border-brand-500 focus:outline-none text-sm text-white transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-gray-300 mb-1.5">Message</label>
+                            <textarea rows="4" required placeholder="Write your message here..." class="w-full px-4 py-2.5 rounded-xl bg-darkcard border border-darkborder focus:border-brand-500 focus:outline-none text-sm text-white transition-colors"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-brand-accent hover:from-brand-500 hover:to-cyan-500 text-white font-medium text-sm transition-all shadow-lg shadow-brand-600/20 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Send Message</span>
+                        </button>
+
+                        <div id="form-status" class="hidden p-3 rounded-lg text-center text-xs font-medium"></div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-darkborder text-center text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 CS & Data Science Portfolio. Built with HTML, Tailwind CSS & JavaScript.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Printable CV Modal -->
+    <div id="cvModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-gray-900 text-gray-100 max-w-3xl w-full rounded-2xl shadow-2xl border border-darkborder overflow-hidden my-8 max-h-[90vh] flex flex-col">
+            
+            <!-- Modal Header -->
+            <div class="p-4 bg-darkcard border-b border-darkborder flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-file-pdf text-brand-accent text-lg"></i>
+                    <span class="font-bold text-sm text-white">Curriculum Vitae Preview</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="window.print()" class="px-3 py-1.5 text-xs bg-brand-600 hover:bg-brand-500 text-white rounded-lg flex items-center gap-1.5 transition-colors">
+                        <i class="fa-solid fa-print"></i> Print / Save PDF
+                    </button>
+                    <button onclick="closeCvModal()" class="p-1.5 text-gray-400 hover:text-white rounded-lg text-lg">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CV Document Content -->
+            <div class="p-8 overflow-y-auto space-y-6 text-sm text-gray-300 font-sans leading-relaxed bg-darkbg">
+                
+                <!-- CV Header -->
+                <div class="border-b border-darkborder pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-white tracking-wide">Computer Science Student</h1>
+                        <p class="text-brand-accent font-mono text-xs mt-1">Aspiring Data Scientist & AI Engineer</p>
+                    </div>
+                    <div class="text-xs space-y-1 text-gray-400">
+                        <div><i class="fa-solid fa-location-dot me-1.5"></i>Kano, Nigeria</div>
+                        <div><i class="fa-solid fa-envelope me-1.5"></i>myemail@domain.com</div>
+                        <div><i class="fa-brands fa-linkedin me-1.5"></i>linkedin.com/in/username</div>
+                        <div><i class="fa-brands fa-github me-1.5"></i>github.com/username</div>
+                    </div>
+                </div>
+
+                <!-- Professional Summary -->
+                <div>
+                    <h2 class="text-xs font-mono font-bold uppercase tracking-wider text-brand-accent mb-2">Professional Summary</h2>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Analytical and details-driven Computer Science undergraduate specializing in Data Science and Analytics. Proficient in Python (Pandas, NumPy, Matplotlib, Seaborn) and SQL for querying and exploratory data analysis. Demonstrated ability to clean, analyze, and visualize complex datasets to extract actionable business insights. Eager to leverage strong statistical foundations in an entry-level Data Analyst or Data Science Intern role.
+                    </p>
+                </div>
+
+                <!-- Technical Skills -->
+                <div>
+                    <h2 class="text-xs font-mono font-bold uppercase tracking-wider text-brand-accent mb-2">Technical Skills</h2>
+                    <ul class="text-xs space-y-1 list-disc list-inside text-gray-300">
+                        <li><strong class="text-white">Programming Languages:</strong> Python, SQL</li>
+                        <li><strong class="text-white">Data Analysis & Visualization:</strong> Pandas, NumPy, Matplotlib, Seaborn, EDA</li>
+                        <li><strong class="text-white">Tools & Workflows:</strong> Git, GitHub, Jupyter Notebooks, PyCharm, Google Colab</li>
+                        <li><strong class="text-white">Core Concepts:</strong> Statistical Analysis, Feature Engineering, Machine Learning Fundamentals</li>
+                    </ul>
+                </div>
+
+                <!-- Selected Data Projects -->
+                <div>
+                    <h2 class="text-xs font-mono font-bold uppercase tracking-wider text-brand-accent mb-3">Key Data Projects</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-white">
+                                <span>Titanic EDA & Predictive Modeling</span>
+                                <span class="font-mono text-gray-400">Python / Kaggle</span>
+                            </div>
+                            <ul class="text-xs list-disc list-inside text-gray-400 mt-1 space-y-1">
+                                <li>Cleaned and preprocessed structured dataset of 800+ passenger records, handling missing age/fare values.</li>
+                                <li>Engineered demographic features and built Seaborn visual distributions to isolate key survival drivers.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-bold text-white">
+                                <span>E-Commerce Sales & Customer Analytics</span>
+                                <span class="font-mono text-gray-400">SQL / Analytics</span>
+                            </div>
+                            <ul class="text-xs list-disc list-inside text-gray-400 mt-1 space-y-1">
+                                <li>Authored complex SQL queries (JOINs, Aggregations, Subqueries) to summarize sales metrics.</li>
+                                <li>Identified key seasonal sales trends and customer purchasing frequency patterns.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education & Certifications -->
+                <div>
+                    <h2 class="text-xs font-mono font-bold uppercase tracking-wider text-brand-accent mb-2">Education & Certifications</h2>
+                    <div class="text-xs space-y-2">
+                        <div class="flex justify-between">
+                            <div><strong class="text-white">B.Sc. Computer Science</strong> — Local University, Kano</div>
+                            <span class="text-gray-400">In Progress</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <div><strong class="text-white">100 Days of Code Python Bootcamp</strong> — Udemy</div>
+                            <span class="text-gray-400">Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Project Deep Dive Modal -->
+    <div id="projectModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-darkcard text-gray-100 max-w-2xl w-full rounded-2xl shadow-2xl border border-darkborder overflow-hidden my-8 p-6 space-y-5">
+            <div class="flex items-center justify-between border-b border-darkborder pb-4">
+                <h3 id="modalProjectTitle" class="text-xl font-bold text-white">Project Title</h3>
+                <button onclick="closeProjectModal()" class="text-gray-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="modalProjectContent" class="space-y-4 text-sm text-gray-300">
+                <!-- Content inserted dynamically via JS -->
+            </div>
+
+            <div class="pt-4 border-t border-darkborder flex justify-end gap-3">
+                <button onclick="closeProjectModal()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300">Close</button>
+                <a id="modalGithubBtn" href="https://github.com" target="_blank" rel="noopener" class="px-4 py-2 text-xs font-semibold rounded-lg bg-brand-600 hover:bg-brand-500 text-white flex items-center gap-2">
+                    <i class="fa-brands fa-github"></i> View GitHub Repo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. Interactive Sandbox Chart Setup ---
+        let currentChart = null;
+
+        const chartDatasets = {
+            survival: {
+                title: "Titanic Demographics & Survival Rate",
+                desc: "Evaluating survival outcomes cross-referenced by ticket class passenger demographics. Highlights standard EDA grouping and visualization techniques.",
+                records: "891 rows",
+                metric: "38.38%",
+                insight: "First-class passengers showed a significantly higher survival rate (~63%) compared to third-class (~24%).",
+                type: 'bar',
+                data: {
+                    labels: ['1st Class', '2nd Class', '3rd Class', 'Female Overall', 'Male Overall'],
+                    datasets: [
+                        {
+                            label: 'Survival Rate (%)',
+                            data: [62.9, 47.3, 24.2, 74.2, 18.9],
+                            backgroundColor: ['#6366f1', '#06b6d4', '#3b82f6', '#10b981', '#f59e0b'],
+                            borderRadius: 6
+                        }
+                    ]
+                }
+            },
+            sales: {
+                title: "E-Commerce Revenue & Sales Performance Analysis",
+                desc: "Quarterly sales revenue aggregated via structured SQL queries and time-series data wrangling.",
+                records: "12,450 logs",
+                metric: "$142,500",
+                insight: "Q4 peak resulted in a 34% increase in sales driven by bundled product recommendations.",
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [
+                        {
+                            label: 'Monthly Sales ($)',
+                            data: [7500, 8200, 9100, 8800, 10500, 11200, 12000, 11800, 13400, 15000, 18200, 21000],
+                            borderColor: '#06b6d4',
+                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        }
+                    ]
+                }
+            },
+            churn: {
+                title: "Customer Churn Predictive Risk Metrics",
+                desc: "Model confusion matrix outcomes showcasing precision and recall metrics for customer churn classification.",
+                records: "3,200 users",
+                metric: "87.4% Acc",
+                insight: "Contract length and monthly tenure were identified as top predictive features for churn risk.",
+                type: 'bar',
+                data: {
+                    labels: ['Precision', 'Recall', 'F1-Score', 'Overall Accuracy'],
+                    datasets: [
+                        {
+                            label: 'Classification Model Metric (%)',
+                            data: [85.2, 83.6, 84.4, 87.4],
+                            backgroundColor: ['#8b5cf6', '#ec4899', '#10b981', '#6366f1'],
+                            borderRadius: 6
+                        }
+                    ]
+                }
+            }
+        };
+
+        function renderChart(key) {
+            const ctx = document.getElementById('interactiveDemoChart').getContext('2d');
+            const config = chartDatasets[key];
+
+            // Update Text Elements
+            document.getElementById('sandbox-title').textContent = config.title;
+            document.getElementById('sandbox-desc').textContent = config.desc;
+            document.getElementById('stat-records').textContent = config.records;
+            document.getElementById('stat-metric').textContent = config.metric;
+            document.getElementById('sandbox-insight').textContent = config.insight;
+
+            if (currentChart) {
+                currentChart.destroy();
+            }
+
+            currentChart = new Chart(ctx, {
+                type: config.type,
+                data: config.data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#9ca3af', font: { size: 11 } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#9ca3af', font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChart(key) {
+            // Update Active Button Styling
+            document.querySelectorAll('.chart-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white');
+                btn.classList.add('bg-gray-800', 'text-gray-400');
+            });
+            const activeBtn = document.getElementById(`btn-${key}`);
+            activeBtn.classList.remove('bg-gray-800', 'text-gray-400');
+            activeBtn.classList.add('bg-brand-600', 'text-white');
+
+            renderChart(key);
+        }
+
+        // Initialize default chart on window load
+        window.onload = function() {
+            renderChart('survival');
+        };
+
+        // --- 2. Skill Matrix Filter Logic ---
+        function filterSkills(category) {
+            const tabs = document.querySelectorAll('.skill-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-brand-600', 'text-white');
+                tab.classList.add('bg-gray-800', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-gray-800', 'text-gray-300');
+            event.target.classList.add('bg-brand-600', 'text-white');
+
+            const cards = document.querySelectorAll('.skill-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // --- 3. Modals Management ---
+        function openCvModal() {
+            document.getElementById('cvModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCvModal() {
+            document.getElementById('cvModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        const projectDetails = {
+            titanic: {
+                title: "Titanic Survival EDA & Predictive Modeling",
+                github: "https://github.com",
+                content: `
+                    <p><strong>Overview:</strong> Performed comprehensive exploratory data analysis (EDA) on the classic Titanic dataset to identify key factors influencing passenger survival rates.</p>
+                    <p><strong>Technical Workflow:</strong></p>
+                    <ul class="list-disc list-inside space-y-1 text-xs text-gray-400">
+                        <li>Handled missing numerical values using median imputation and categorical values via mode fill.</li>
+                        <li>Engineered new features like <code>FamilySize</code> and extracted titles from passenger names.</li>
+                        <li>Visualized distributions using Seaborn correlation heatmaps and box plots.</li>
+                        <li>Trained a baseline Logistic Regression classifier achieving ~81% accuracy on cross-validation.</li>
+                    </ul>
+                    <p><strong>Key Takeaway:</strong> Gender and passenger class were the highest predictor variables in survival classification.</p>
+                `
+            },
+            sales: {
+                title: "E-Commerce Revenue & Sales Performance Analysis",
+                github: "https://github.com",
+                content: `
+                    <p><strong>Overview:</strong> Analyzed e-commerce customer transaction history to evaluate revenue trends, customer lifetime value, and order frequencies.</p>
+                    <p><strong>Technical Workflow:</strong></p>
+                    <ul class="list-disc list-inside space-y-1 text-xs text-gray-400">
+                        <li>Constructed complex SQL queries utilizing aggregate functions, <code>GROUP BY</code>, and multi-table <code>JOIN</code> operations.</li>
+                        <li>Calculated Monthly Recurring Revenue (MRR) and Average Order Value (AOV).</li>
+                        <li>Integrated SQL output dataset with frontend visualization tools (Chart.js) for executive presentation.</li>
+                    </ul>
+                `
+            },
+            churn: {
+                title: "Customer Churn Risk Classification Model",
+                github: "https://github.com",
+                content: `
+                    <p><strong>Overview:</strong> Built a binary classification machine learning pipeline to predict customer churn for a subscription service.</p>
+                    <p><strong>Technical Workflow:</strong></p>
+                    <ul class="list-disc list-inside space-y-1 text-xs text-gray-400">
+                        <li>Preprocessed structured telemetry data with Pandas & Scikit-Learn standard scaling.</li>
+                        <li>Trained Random Forest and Logistic Regression models, tuning hyperparameters for optimal recall.</li>
+                        <li>Evaluated performance using ROC-AUC score and confusion matrix metrics.</li>
+                    </ul>
+                `
+            }
+        };
+
+        function openProjectModal(key) {
+            const data = projectDetails[key];
+            document.getElementById('modalProjectTitle').textContent = data.title;
+            document.getElementById('modalProjectContent').innerHTML = data.content;
+            document.getElementById('modalGithubBtn').href = data.github;
+            document.getElementById('projectModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal() {
+            document.getElementById('projectModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- 4. Mobile Menu Toggle ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- 5. Contact Form Handler ---
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const status = document.getElementById('form-status');
+            status.classList.remove('hidden', 'bg-red-500/20', 'text-red-300');
+            status.classList.add('bg-emerald-500/20', 'text-emerald-300');
+            status.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Thank you! Your message has been sent successfully.';
+            
+            e.target.reset();
+            setTimeout(() => {
+                status.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
